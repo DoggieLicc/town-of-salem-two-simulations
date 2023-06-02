@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import List, Union, Optional
+from typing import List, Union, Optional, Set
 
 import utils.helper_funcs as helpers
 
@@ -23,9 +23,9 @@ class RoleBucket:
     possible_roles: List[Union[Role, RoleBucket]]
     color: Optional[int] = None
     limit: Optional[int] = None
-    cached_roles: Optional[List[Role]] = None
+    cached_roles: Optional[Set[Role]] = None
 
-    def expand_possible_roles(self):
+    def expand_possible_roles(self) -> Set[Role]:
         if self.cached_roles:
             return self.cached_roles
 
@@ -39,7 +39,7 @@ class RoleBucket:
                 for r in role.expand_possible_roles():
                     roles.add(r)
 
-        self.cached_roles = list(roles)
+        self.cached_roles = roles
         return self.cached_roles
 
 
@@ -66,7 +66,7 @@ class RoleList:
                 expanded_roles = role.expand_possible_roles()
                 valid_roles = helpers.get_valid_roles(generated_roles, expanded_roles, self.banned_roles)
 
-                generated_roles.append(random.choice(valid_roles))
+                generated_roles.append(random.choice(list(valid_roles)))
 
         return generated_roles
 
@@ -80,9 +80,9 @@ if __name__ == '__main__':
 
     print(f'Took {time.time() - now} seconds')
 
-    for _ in range(1000):
-        print([r.name for r in AllAny.generate_roles()])
+    for _ in range(10000):
+        print([r.name for r in Classic.generate_roles()])
 
-    print(AllAny.roles[0].possible_roles)
+    print(AllAny.roles[0].cached_roles)
 
     print(f'Took {time.time() - now} seconds')
