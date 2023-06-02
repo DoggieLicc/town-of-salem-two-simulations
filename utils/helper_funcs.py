@@ -2,11 +2,10 @@ from utils.classes import *
 from typing import List, Optional
 
 import utils.role_buckets as RoleBuckets
-import utils.roles as Roles
 
 
 def check_role_limit(generated_roles: List[Role], role: Role) -> bool:
-    if not role.limit:
+    if not role.limit or len(generated_roles) < role.limit:
         return True
 
     num_roles = len([r for r in generated_roles if r == role])
@@ -15,20 +14,17 @@ def check_role_limit(generated_roles: List[Role], role: Role) -> bool:
 
 
 def check_rolebucket_limit(generated_roles: List[Role], role: Role) -> bool:
-    coven_roles = RoleBuckets.RandomCoven.expand_possible_roles()
-    apocalypse_roles = RoleBuckets.NeutralApocalypse.expand_possible_roles()
-
-    if role in coven_roles:
-        num_roles = len([r for r in generated_roles if generated_roles in coven_roles])
+    if role in RoleBuckets.COVEN_ROLES:
+        num_roles = len([r for r in generated_roles if generated_roles in RoleBuckets.COVEN_ROLES])
 
         return num_roles + 1 <= RoleBuckets.RandomCoven.limit
-    elif role in apocalypse_roles:
-        num_roles = len([r for r in generated_roles if generated_roles in apocalypse_roles])
+
+    if role in RoleBuckets.APOCALYPSE_ROLES:
+        num_roles = len([r for r in generated_roles if generated_roles in RoleBuckets.APOCALYPSE_ROLES])
 
         return num_roles + 1 <= RoleBuckets.NeutralApocalypse.limit
 
-    else:
-        return True
+    return True
 
 
 def get_valid_roles(generated_roles: List[Role], possible_roles: List[Role], banned_roles: Optional[List[Role]]) -> List[Role]:
