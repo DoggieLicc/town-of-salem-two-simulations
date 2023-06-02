@@ -43,5 +43,5 @@ Classic = RoleList(
         RoleBuckets.RandomTown,
         RoleBuckets.RandomTown
     ],
-    banned_roles=[Roles.Amnesiac, Roles.Spy, Roles.Trickster]
+    banned_roles={Roles.Amnesiac, Roles.Spy, Roles.Trickster}
 )

@@ -47,7 +47,7 @@ class RoleBucket:
 @dataclass
 class RoleList:
     roles: List[Union[Role, RoleBucket]]
-    banned_roles: List[Role] = field(default_factory=list)
+    banned_roles: Set[Role] = field(default_factory=set)
     sorted_roles: List[Union[Role, RoleBucket]] = field(init=False)
 
     def __post_init__(self):

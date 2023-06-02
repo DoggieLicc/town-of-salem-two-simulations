@@ -27,7 +27,7 @@ def check_rolebucket_limit(generated_roles: List[Role], role: Role) -> bool:
     return True
 
 
-def get_valid_roles(generated_roles: List[Role], possible_roles: Set[Role], banned_roles: Optional[List[Role]]) -> Set[Role]:
+def get_valid_roles(generated_roles: List[Role], possible_roles: Set[Role], banned_roles: Optional[Set[Role]]) -> Set[Role]:
 
     valid_roles: Set[Role] = set()
 
