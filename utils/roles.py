@@ -1,6 +1,6 @@
 from utils.classes import Role
 
-__all__ = ['Prosecutor', 'Monarch', 'Mayor', 'Jailor', 'Admirer', 'Amnesiac', 'Bodyguard', 'Cleric', 'Coroner', 'Crusader', 'Investigator', 'Lookout', 'Psychic', 'Retributionist', 'Seer', 'Sheriff', 'Spy', 'TavernKeeper', 'Tracker', 'Trapper', 'Trickster', 'Veteran', 'Vigilante', 'Conjurer', 'CovenLeader', 'Dreamweaver', 'Enchanter', 'HexMaster', 'Illusionist', 'Jinx', 'Medusa', 'Necromancer', 'Poisoner', 'PotionMaster', 'Ritualist', 'VoodooMaster', 'Wilding', 'Witch', 'Baker', 'Berserker', 'Plaguebearer', 'SoulCollector', 'Arsonist', 'SerialKiller', 'Shroud', 'Werewolf', 'Doomsayer', 'Executioner', 'Jester', 'Pirate']
+__all__ = ['Prosecutor', 'Monarch', 'Mayor', 'Jailor', 'Admirer', 'Amnesiac', 'Bodyguard', 'Cleric', 'Coroner', 'Crusader', 'Investigator', 'Lookout', 'Psychic', 'Retributionist', 'Seer', 'Sheriff', 'Spy', 'TavernKeeper', 'Tracker', 'Trapper', 'Trickster', 'Veteran', 'Vigilante', 'Conjurer', 'CovenLeader', 'Dreamweaver', 'Enchanter', 'HexMaster', 'Illusionist', 'Jinx', 'Medusa', 'Necromancer', 'Poisoner', 'PotionMaster', 'Ritualist', 'VoodooMaster', 'Wilding', 'Witch', 'Baker', 'Berserker', 'Plaguebearer', 'SoulCollector', 'Arsonist', 'SerialKiller', 'Shroud', 'Werewolf', 'Doomsayer', 'Executioner', 'Jester', 'Pirate', 'Deputy']
 
 
 # TOWN POWER
@@ -16,7 +16,7 @@ Bodyguard = Role(name='Bodyguard')
 Cleric = Role(name='Cleric')
 Coroner = Role(name='Coroner')
 Crusader = Role(name='Crusader')
-Deputy = Role(name='Deputy'),
+Deputy = Role(name='Deputy')
 Investigator = Role(name='Investigator')
 Lookout = Role(name='Lookout')
 Psychic = Role(name='Psychic')

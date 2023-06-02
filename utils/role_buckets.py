@@ -4,11 +4,6 @@ import utils.roles as Roles
 __all__ = ['Any', 'TownPower', 'TownKilling', 'TownProtective', 'TownSupport', 'TownInvestigative', 'RandomTown', 'CovenPower', 'CovenKilling', 'CovenUtility', 'CovenDeception', 'RandomCoven', 'NeutralApocalypse', 'NeutralEvil', 'NeutralKilling', 'RandomNeutral']
 
 
-Any = RoleBucket(
-    name='Any',
-    possible_roles=Roles.__all__
-)
-
 TownPower = RoleBucket(
     name='Town Power',
     possible_roles=[Roles.Jailor, Roles.Mayor, Roles.Monarch, Roles.Prosecutor]
@@ -93,5 +88,12 @@ RandomNeutral = RoleBucket(
     name='Random Neutral',
     possible_roles=[NeutralApocalypse, NeutralEvil, NeutralKilling],
 )
+
+
+Any = RoleBucket(
+    name='Any',
+    possible_roles=[RandomTown, RandomCoven, RandomNeutral]
+)
+
 
 # print([v for v, h in globals().items() if isinstance(h, RoleBucket)])
