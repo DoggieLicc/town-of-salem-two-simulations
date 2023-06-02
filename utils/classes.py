@@ -57,7 +57,7 @@ class RoleList:
 
             else:
                 expanded_roles = role.expand_possible_roles()
-                valid_roles = helpers.get_valid_roles(generated_roles, expanded_roles)
+                valid_roles = helpers.get_valid_roles(generated_roles, expanded_roles, self.banned_roles)
 
                 generated_roles.append(random.choice(valid_roles))
 
@@ -68,4 +68,4 @@ if __name__ == '__main__':
     from utils.presets_rolelists import *
 
     for _ in range(250):
-        print([r.name for r in AllAny.generate_roles()])
+        print([r.name for r in Classic.generate_roles()])

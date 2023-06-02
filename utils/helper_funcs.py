@@ -1,5 +1,5 @@
 from utils.classes import *
-from typing import List
+from typing import List, Optional
 
 import utils.role_buckets as RoleBuckets
 import utils.roles as Roles
@@ -31,12 +31,12 @@ def check_rolebucket_limit(generated_roles: List[Role], role: Role) -> bool:
         return True
 
 
-def get_valid_roles(generated_roles: List[Role], possible_roles: List[Role]) -> List[Role]:
+def get_valid_roles(generated_roles: List[Role], possible_roles: List[Role], banned_roles: Optional[List[Role]]) -> List[Role]:
 
     valid_roles: List[Role] = []
 
     for role in possible_roles:
-        if check_role_limit(generated_roles, role) and check_rolebucket_limit(generated_roles, role):
+        if not role in banned_roles and check_role_limit(generated_roles, role) and check_rolebucket_limit(generated_roles, role):
             valid_roles.append(role)
 
     return valid_roles
