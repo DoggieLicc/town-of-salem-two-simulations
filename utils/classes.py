@@ -42,7 +42,7 @@ class RoleBucket:
 @dataclass
 class RoleList:
     roles: List[Union[Role, RoleBucket]]
-    banned_roles: Optional[List[Role]] = None
+    banned_roles: List[Role] = field(default_factory=list)
 
     def generate_roles(self):
 
