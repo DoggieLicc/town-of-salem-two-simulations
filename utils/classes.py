@@ -75,14 +75,9 @@ if __name__ == '__main__':
 
     now = time.time()
 
-    for _ in range(10000):
-        Classic.generate_roles()
+    for _ in range(1000):
+        c = AllAny.generate_roles()
+        helpers.check_list_for_opposing_factions(c)
 
     print(f'Took {time.time() - now} seconds')
 
-    now = time.time()
-
-    for _ in range(10000):
-        AllAny.generate_roles()
-
-    print(f'Took {time.time() - now} seconds')
