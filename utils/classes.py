@@ -13,7 +13,6 @@ __all__ = ['Role', 'RoleBucket', 'RoleList']
 @dataclass(frozen=True, eq=True)
 class Role:
     name: str
-    color: Optional[int] = 0
     limit: Optional[int] = None
 
 
@@ -21,7 +20,6 @@ class Role:
 class RoleBucket:
     name: str
     possible_roles: List[Union[Role, RoleBucket]]
-    color: Optional[int] = None
     limit: Optional[int] = None
     cached_roles: Optional[Set[Role]] = None
 
@@ -41,7 +39,6 @@ class RoleBucket:
 
         self.cached_roles = roles
         return self.cached_roles
-
 
 
 @dataclass
@@ -78,11 +75,14 @@ if __name__ == '__main__':
 
     now = time.time()
 
+    for _ in range(10000):
+        Classic.generate_roles()
+
     print(f'Took {time.time() - now} seconds')
 
-    for _ in range(10000):
-        print([r.name for r in Classic.generate_roles()])
+    now = time.time()
 
-    print(AllAny.roles[0].cached_roles)
+    for _ in range(10000):
+        AllAny.generate_roles()
 
     print(f'Took {time.time() - now} seconds')

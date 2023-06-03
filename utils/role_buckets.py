@@ -31,7 +31,6 @@ TownInvestigative = RoleBucket(
 
 RandomTown = RoleBucket(
     name='Random Town',
-    color=0x06e00c,
     possible_roles=[TownPower, TownKilling, TownProtective, TownSupport, TownInvestigative]
 )
 
@@ -61,14 +60,12 @@ CovenDeception = RoleBucket(
 
 RandomCoven = RoleBucket(
     name='Random Coven',
-    color=0xb545ff,
     possible_roles=[CovenPower, CovenKilling, CovenUtility, CovenDeception],
     limit=4
 )
 
 NeutralApocalypse = RoleBucket(
     name='Neutral Apocalypse',
-    color=0xff004e,
     possible_roles=[Roles.Baker, Roles.Berserker, Roles.Plaguebearer, Roles.SoulCollector],
     limit=1
 )
