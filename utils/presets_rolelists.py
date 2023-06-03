@@ -1,11 +1,11 @@
-import utils.roles as Roles
-import utils.role_buckets as RoleBuckets
-
-from utils.classes import *
+from utils import roles as Roles
+from utils import role_buckets as RoleBuckets
+from utils import RoleList
 
 __all__ = ['AllAny', 'Classic']
 
 AllAny = RoleList(
+    name='All Any',
     roles=[
         RoleBuckets.Any,
         RoleBuckets.Any,
@@ -26,6 +26,7 @@ AllAny = RoleList(
 )
 
 Classic = RoleList(
+    name='Classic',
     roles=[
         Roles.Mayor,
         Roles.Seer,

@@ -1,5 +1,5 @@
-from utils.classes import *
-import utils.roles as Roles
+from utils import roles as Roles
+from utils.classes import RoleBucket
 
 __all__ = ['Any', 'TownPower', 'TownKilling', 'TownProtective', 'TownSupport', 'TownInvestigative', 'RandomTown', 'CovenPower', 'CovenKilling', 'CovenUtility', 'CovenDeception', 'RandomCoven', 'NeutralApocalypse', 'NeutralEvil', 'NeutralKilling', 'RandomNeutral', 'COVEN_ROLES', 'APOCALYPSE_ROLES', 'TOWN_ROLES']
 
