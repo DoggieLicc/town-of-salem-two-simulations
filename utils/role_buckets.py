@@ -67,7 +67,6 @@ RandomCoven = RoleBucket(
 NeutralApocalypse = RoleBucket(
     name='Neutral Apocalypse',
     possible_roles=[Roles.Baker, Roles.Berserker, Roles.Plaguebearer, Roles.SoulCollector],
-    limit=1
 )
 
 NeutralEvil = RoleBucket(
