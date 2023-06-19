@@ -2,7 +2,7 @@ from utils import roles as Roles
 from utils import role_buckets as RoleBuckets
 from utils import RoleList
 
-__all__ = ['AllAny', 'Classic']
+__all__ = ['AllAny', 'Classic', 'Ranked1']
 
 AllAny = RoleList(
     name='All Any',
@@ -45,4 +45,26 @@ Classic = RoleList(
         RoleBuckets.RandomTown
     ],
     banned_roles={Roles.Amnesiac, Roles.Spy, Roles.Trickster}
+)
+
+
+Ranked1 = RoleList(
+    name='Ranked 1',
+    roles=[
+        Roles.Jailor,
+        RoleBuckets.TownInvestigative,
+        RoleBuckets.TownInvestigative,
+        RoleBuckets.TownProtective,
+        RoleBuckets.TownKilling,
+        RoleBuckets.TownSupport,
+        RoleBuckets.RandomTown,
+        RoleBuckets.RandomTown,
+        RoleBuckets.RandomTown,
+        Roles.CovenLeader,
+        RoleBuckets.CovenUtility,
+        RoleBuckets.RandomCoven,
+        RoleBuckets.RandomCoven,
+        RoleBuckets.NeutralKilling,
+        RoleBuckets.NeutralEvil
+    ]
 )
