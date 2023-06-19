@@ -70,7 +70,7 @@ NeutralApocalypse = RoleBucket(
 )
 
 NeutralEvil = RoleBucket(
-    name='NeutralEvil',
+    name='Neutral Evil',
     possible_roles=[Roles.Doomsayer, Roles.Executioner, Roles.Jester, Roles.Pirate],
 )
 

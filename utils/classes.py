@@ -66,6 +66,7 @@ class RoleList:
 
         return generated_roles
 
+
 import utils.role_buckets as RoleBuckets
 
 
