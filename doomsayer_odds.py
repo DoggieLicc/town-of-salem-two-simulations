@@ -59,5 +59,5 @@ if __name__ == '__main__':
 
                 #print(random_roles)
 
-    print(f'{success_count}/{list_count} ({(success_count / list_count): .2f}%)')
+    print(f'{success_count}/{list_count} ({(success_count*100 / list_count): .4f}%)')
     print(f'Average amount of coven roles per game: {num_coven/num_gens}')

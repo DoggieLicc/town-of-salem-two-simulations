@@ -36,4 +36,4 @@ if __name__ == '__main__':
         if i % 1000 == 0:
             print(f'generated {i}/{num_gens}')
 
-    print(f'{success_count}/{num_gens} ({(success_count / num_gens): .3f}%)')
+    print(f'{success_count}/{num_gens} ({(success_count*100 / num_gens): .3f}%)')
