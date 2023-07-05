@@ -1,5 +1,5 @@
 import utils.role_buckets
-from utils.presets_rolelists import AllAny
+from utils.presets_rolelists import AllAny, Classic, Ranked1_doom
 from utils.roles import Doomsayer
 
 import random
