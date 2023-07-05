@@ -8,6 +8,24 @@ import random
 
 if __name__ == '__main__':
 
+    role_lists = [AllAny, Classic, Ranked1_doom]
+
+    print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in role_lists]))
+
+    while True:
+        rolelist_str = input('Type in a rolelist to simulate.: ')
+
+        rolelist = [rl for rl in role_lists if rl.name.lower() == rolelist_str.lower().strip("' \"")]
+
+        if rolelist:
+            break
+
+    rolelist = rolelist[0]
+
+    print(f'You selected: {rolelist.name}\n')
+
+    print('\n'.join([f'  {r.name}' for r in rolelist.roles]))
+
     while True:
         num_gens_str = input('Type in the amount of lists with doomsayer to generate (default:1000): ')
         num_gens = None
@@ -33,7 +51,7 @@ if __name__ == '__main__':
 
     while list_count < num_gens:
 
-        roles = AllAny.generate_roles()
+        roles = rolelist.generate_roles()
 
         doomsayers = [r for r in roles if r == Doomsayer]
 
