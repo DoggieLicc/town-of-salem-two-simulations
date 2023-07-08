@@ -115,7 +115,7 @@ def check_list_for_opposing_factions(role_list: List[Role]) -> bool:
     unique_neutral_killings = role_set.intersection(RoleBuckets.NeutralKilling.expand_possible_roles())
 
     if unique_neutral_killings:
-        return bool(townies or coven or apocalypse or len(unique_neutral_killings))
+        return bool(townies or coven or apocalypse or (len(unique_neutral_killings) > 1))
 
     return False
 
