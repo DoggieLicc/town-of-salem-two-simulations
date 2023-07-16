@@ -1,9 +1,11 @@
+import multiprocessing
+
 import utils.role_buckets
 from utils.presets_rolelists import AllAny
+from utils.classes import parallel_generate_roles
 
 
-if __name__ == '__main__':
-
+def main():
     while True:
         num_gens_str = input('Type in the amount of lists to generate: (default:1000): ')
         num_gens = None
@@ -20,20 +22,15 @@ if __name__ == '__main__':
 
     apoc_roles = utils.role_buckets.APOCALYPSE_ROLES
 
-    success_count = 0
-
     print('Generating...')
 
-    for i in range(num_gens):
+    results = parallel_generate_roles(AllAny, num_gens=num_gens)
 
-        roles = AllAny.generate_roles()
-
-        apocs = [r for r in roles if r in apoc_roles]
-
-        if len(apocs) == 4:
-            success_count += 1
-
-        if i % 1000 == 0:
-            print(f'generated {i}/{num_gens}')
+    success_count = sum(1 for rl in results if len([r for r in rl if r in apoc_roles]) == 4)
 
     print(f'{success_count}/{num_gens} ({(success_count*100 / num_gens): .3f}%)')
+
+
+if __name__ == '__main__':
+    multiprocessing.set_start_method('spawn')
+    main()

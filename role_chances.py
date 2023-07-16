@@ -1,9 +1,14 @@
+import multiprocessing
+
 from utils.presets_rolelists import AllAny, Classic, Ranked1
-from utils.classes import check_list_for_opposing_factions
+from utils.classes import check_list_for_opposing_factions, parallel_generate_roles, calculate_percentage, b_print
+
+import utils.role_buckets as RoleBuckets
+
 from collections import Counter
 
 
-if __name__ == '__main__':
+def main():
     role_lists = [AllAny, Classic, Ranked1]
 
     print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in role_lists]))
@@ -56,31 +61,55 @@ if __name__ == '__main__':
 
     print(f'Amount of rolelists to generate: {num_gens}')
 
-    role_counter = Counter()
-
     print('Generating...')
 
-    successful_gens = 0
-
-    while successful_gens < num_gens:
-        roles = rolelist.generate_roles()
-
-        if check_opposing_facs:
-            opposing_facs = check_list_for_opposing_factions(roles)
-
-            if not opposing_facs:
-                print(f'Caught generated list with no opposing factions, retrying...: {roles}')
-                continue
-
-        successful_gens += 1
-
-        if successful_gens % 1000 == 0:
-            print(f'generated {successful_gens}/{num_gens}')
-
-        unique_roles = set(roles)
-        role_counter.update(unique_roles)
+    generated_roles = parallel_generate_roles(rolelist, num_gens, check_list_for_opposing_factions if check_opposing_facs else None)
 
     print('Done!\n\n')
 
-    for k, v in role_counter.most_common():
-        print(f'{k.name}: ({v}/{num_gens}) {v*100/num_gens: .2f}%')
+    role_counter = Counter()
+
+    for roles in generated_roles:
+        role_counter.update(roles)
+
+    town_count = sum(role_counter.get(role, 0) for role in RoleBuckets.TOWN_ROLES)
+    coven_count = sum(role_counter.get(role, 0) for role in RoleBuckets.COVEN_ROLES)
+    na_count = sum(role_counter.get(role, 0) for role in RoleBuckets.APOCALYPSE_ROLES)
+    nk_count = sum(role_counter.get(role, 0) for role in RoleBuckets.NeutralKilling.expand_possible_roles())
+    ne_count = sum(role_counter.get(role, 0) for role in RoleBuckets.NeutralEvil.expand_possible_roles())
+
+    total_count = town_count+coven_count+na_count+nk_count+ne_count
+
+    role_len = len(rolelist.roles)
+
+    b_print(f"Town: ({town_count/num_gens:.2f}/{role_len}) {calculate_percentage(town_count, total_count):.2f}%")
+    for role in sorted(RoleBuckets.TOWN_ROLES, key=lambda r: role_counter.get(r, 0), reverse=True):
+        count = role_counter.get(role, 0)
+        print(f"{role.name}: ({count}/{num_gens}) {calculate_percentage(count, num_gens):.2f}%")
+
+    b_print(f"\nCoven: ({coven_count/num_gens:.2f}/{role_len}) {calculate_percentage(coven_count, total_count):.2f}%")
+    for role in sorted(RoleBuckets.COVEN_ROLES, key=lambda r: role_counter.get(r, 0), reverse=True):
+        count = role_counter.get(role, 0)
+        print(f"{role.name}: ({count}/{num_gens}) {calculate_percentage(count, num_gens):.2f}%")
+
+    b_print(f"\nNeutralApoc: ({na_count/num_gens:.2f}/{role_len}) {calculate_percentage(na_count, total_count):.2f}%")
+    for role in sorted(RoleBuckets.APOCALYPSE_ROLES, key=lambda r: role_counter.get(r, 0), reverse=True):
+        count = role_counter.get(role, 0)
+        print(f"{role.name}: ({count}/{num_gens}) {calculate_percentage(count, num_gens):.2f}%")
+
+    b_print(f"\nNeutralKill: ({nk_count/num_gens:.2f}/{role_len}) {calculate_percentage(nk_count, total_count):.2f}%")
+    neutral_killing_roles = RoleBuckets.NeutralKilling.expand_possible_roles()
+    for role in sorted(neutral_killing_roles, key=lambda r: role_counter.get(r, 0), reverse=True):
+        count = role_counter.get(role, 0)
+        print(f"{role.name}: ({count}/{num_gens}) {calculate_percentage(count, num_gens):.2f}%")
+
+    b_print(f"\nNeutralEvil: ({ne_count/num_gens:.2f}/{role_len}) {calculate_percentage(ne_count, total_count):.2f}%")
+    neutral_evil_roles = RoleBuckets.NeutralEvil.expand_possible_roles()
+    for role in sorted(neutral_evil_roles, key=lambda r: role_counter.get(r, 0), reverse=True):
+        count = role_counter.get(role, 0)
+        print(f"{role.name}: ({count}/{num_gens}) {calculate_percentage(count, num_gens):.2f}%")
+
+
+if __name__ == '__main__':
+    multiprocessing.set_start_method('spawn')
+    main()

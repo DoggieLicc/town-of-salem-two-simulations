@@ -1,13 +1,20 @@
+import multiprocessing
+
 import utils.role_buckets
 from utils.presets_rolelists import AllAny, Classic, Ranked1_doom
 from utils.roles import Doomsayer
+from utils.classes import parallel_generate_roles
 
 import random
 
 # Simulate the odds of Doomsayer winning N1 by randomly guessing in AllAny
 
-if __name__ == '__main__':
 
+def check(rolelist):
+    return [r for r in rolelist if r == Doomsayer]
+
+
+def main():
     role_lists = [AllAny, Classic, Ranked1_doom]
 
     print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in role_lists]))
@@ -40,7 +47,6 @@ if __name__ == '__main__':
         if num_gens:
             break
 
-    list_count = 0
     success_count = 0
 
     num_coven = 0
@@ -49,33 +55,27 @@ if __name__ == '__main__':
 
     print('Generating...')
 
-    while list_count < num_gens:
+    results = parallel_generate_roles(rolelist, num_gens, check=check)
 
-        roles = rolelist.generate_roles()
-
-        doomsayers = [r for r in roles if r == Doomsayer]
-
-        if not doomsayers:
-            continue
-
-        list_count += 1
-
-        if list_count % 1000 == 0:
-            print(f'generated {list_count}/{num_gens}')
-
-        role_copy = roles.copy()
+    for result in results:
+        role_copy = result.copy()
         role_copy.remove(Doomsayer)
 
-        num_coven += len([r for r in roles if r in coven_roles])
+        num_coven += len([r for r in result if r in coven_roles])
 
-        for doomsayer in doomsayers:
+        doomsayers = [r for r in result if r == Doomsayer]
+
+        for _ in doomsayers:
             random_roles = random.sample(role_copy, 3)
 
             if len([r for r in random_roles if r in coven_roles]) == 3:
                 success_count += 1
                 continue
 
-                #print(random_roles)
-
-    print(f'{success_count}/{list_count} ({(success_count*100 / list_count): .4f}%)')
+    print(f'{success_count}/{num_gens} ({(success_count*100 / num_gens): .4f}%)')
     print(f'Average amount of coven roles per game: {num_coven/num_gens}')
+
+
+if __name__ == '__main__':
+    multiprocessing.set_start_method('spawn')
+    main()

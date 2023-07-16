@@ -1,7 +1,9 @@
 from __future__ import annotations
 
+import multiprocessing
 from dataclasses import dataclass, field
-from typing import List, Union, Optional, Set
+from typing import List, Union, Optional, Set, Callable
+from functools import partial
 
 import random
 
@@ -32,8 +34,7 @@ class RoleBucket:
                 roles.add(role)
 
             else:
-                for r in role.expand_possible_roles():
-                    roles.add(r)
+                roles.update(role.expand_possible_roles())
 
         self.cached_roles = roles
         return self.cached_roles
@@ -50,21 +51,22 @@ class RoleList:
         # Sort role/rolebuckets by amount of possible roles to have more flexibility
         self.sorted_roles = sorted(self.roles, key=lambda r: 1 if isinstance(r, Role) else len(r.expand_possible_roles()))
 
-    def generate_roles(self):
+    def generate_roles(self, check: Optional[Callable] = None, *_):
+        while True:
+            generated_roles: List[Role] = []
 
-        generated_roles: List[Role] = []
+            for role in self.sorted_roles:
+                if isinstance(role, Role):
+                    generated_roles.append(role)
 
-        for role in self.sorted_roles:
-            if isinstance(role, Role):
-                generated_roles.append(role)
+                else:
+                    expanded_roles = role.expand_possible_roles()
+                    valid_roles = get_valid_roles(generated_roles, expanded_roles, self.banned_roles)
 
-            else:
-                expanded_roles = role.expand_possible_roles()
-                valid_roles = get_valid_roles(generated_roles, expanded_roles, self.banned_roles)
+                    generated_roles.append(random.choice(list(valid_roles)))
 
-                generated_roles.append(random.choice(list(valid_roles)))
-
-        return generated_roles
+            if not check or check(generated_roles):
+                return generated_roles
 
 
 import utils.role_buckets as RoleBuckets
@@ -89,13 +91,7 @@ def check_rolebucket_limit(generated_roles: List[Role], role: Role) -> bool:
 
 
 def get_valid_roles(generated_roles: List[Role], possible_roles: Set[Role], banned_roles: Optional[Set[Role]]) -> Set[Role]:
-
-    valid_roles: Set[Role] = set()
-
-    for role in possible_roles:
-        if not role in banned_roles and check_role_limit(generated_roles, role) and check_rolebucket_limit(generated_roles, role):
-            valid_roles.add(role)
-
+    valid_roles = {role for role in possible_roles if role not in banned_roles and check_role_limit(generated_roles, role) and check_rolebucket_limit(generated_roles, role)}
     return valid_roles
 
 
@@ -117,19 +113,47 @@ def check_list_for_opposing_factions(role_list: List[Role]) -> bool:
     if unique_neutral_killings:
         return bool(townies or coven or apocalypse or (len(unique_neutral_killings) > 1))
 
+    print(role_list)
+
     return False
 
 
-if __name__ == '__main__':
-    from utils.presets_rolelists import *
+def parallel_generate_roles(rolelist, num_gens, check: Optional[Callable] = None):
+    with multiprocessing.Pool() as pool:
+        generate_func = partial(rolelist.generate_roles, check)
+        results = pool.map(generate_func, range(num_gens))
 
+    return [r for r in results if r is not None]
+
+
+def calculate_percentage(count, total):
+    return count * 100 / total
+
+
+def calculate_category_count(category_count, total_count):
+    return f'{category_count}/{total_count} ({calculate_percentage(category_count, total_count):.4f}%)'
+
+
+def b_print(text: str, *args, **kwargs):
+
+    text = '\033[1m' + text + '\033[0m'
+
+    print(text, *args, **kwargs)
+
+
+def main():
     import time
 
     now = time.time()
 
-    for _ in range(1000):
-        c = AllAny.generate_roles()
-        check_list_for_opposing_factions(c)
+    parallel_generate_roles(AllAny, num_gens=100000, check=check_list_for_opposing_factions)
 
     print(f'Took {time.time() - now} seconds')
+
+
+if __name__ == '__main__':
+    from utils.presets_rolelists import AllAny
+
+    multiprocessing.set_start_method('spawn')
+    main()
 
