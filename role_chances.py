@@ -32,7 +32,7 @@ def main():
     print('\n'.join([f'  {r.name}' for r in rolelist.roles]))
 
     while True:
-        check_opposing_facs_check_str = input('Check generated lists for opposing factions? (y/N): ')
+        check_opposing_facs_check_str = input('\nCheck generated lists for opposing factions? (y/N): ')
 
         if not check_opposing_facs_check_str:
             check_opposing_facs = False

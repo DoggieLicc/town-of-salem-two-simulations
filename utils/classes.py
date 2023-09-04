@@ -7,7 +7,7 @@ from functools import partial
 
 import random
 
-__all__ = ['Role', 'RoleBucket', 'RoleList']
+__all__ = ['Role', 'RoleBucket', 'RoleList', 'parallel_generate_roles']
 
 
 @dataclass(frozen=True, eq=True)
@@ -58,10 +58,12 @@ class RoleList:
             for role in self.sorted_roles:
                 if isinstance(role, Role):
                     generated_roles.append(role)
-
                 else:
                     expanded_roles = role.expand_possible_roles()
                     valid_roles = get_valid_roles(generated_roles, expanded_roles, self.banned_roles)
+
+                    if not valid_roles:
+                        raise Exception(f'There were no possible roles for {role.name}!')
 
                     generated_roles.append(random.choice(list(valid_roles)))
 
@@ -113,7 +115,7 @@ def check_list_for_opposing_factions(role_list: List[Role]) -> bool:
     if unique_neutral_killings:
         return bool(townies or coven or apocalypse or (len(unique_neutral_killings) > 1))
 
-    print(role_list)
+    # print(role_list)
 
     return False
 
