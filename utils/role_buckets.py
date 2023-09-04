@@ -1,7 +1,7 @@
 from utils import roles as Roles
 from utils.classes import RoleBucket
 
-__all__ = ['Any', 'TownPower', 'TownKilling', 'TownProtective', 'TownSupport', 'TownInvestigative', 'RandomTown', 'CovenPower', 'CovenKilling', 'CovenUtility', 'CovenDeception', 'RandomCoven', 'NeutralApocalypse', 'NeutralEvil', 'NeutralKilling', 'RandomNeutral', 'COVEN_ROLES', 'APOCALYPSE_ROLES', 'TOWN_ROLES']
+__all__ = ['Any', 'TownPower', 'TownKilling', 'TownProtective', 'TownSupport', 'TownInvestigative', 'RandomTown', 'CovenPower', 'CovenKilling', 'CovenUtility', 'CovenDeception', 'RandomCoven', 'NeutralApocalypse', 'NeutralEvil', 'NeutralKilling', 'RandomNeutral', 'COVEN_ROLES', 'APOCALYPSE_ROLES', 'TOWN_ROLES', 'ROLE_BUCKETS']
 
 
 TownPower = RoleBucket(
@@ -97,4 +97,4 @@ APOCALYPSE_ROLES = NeutralApocalypse.expand_possible_roles()
 
 TOWN_ROLES = RandomTown.expand_possible_roles()
 
-# print([v for v, h in globals().items() if isinstance(h, RoleBucket)])
+ROLE_BUCKETS = [h for v, h in globals().items() if isinstance(h, RoleBucket)]

@@ -4,10 +4,11 @@ import utils.role_buckets
 from utils.presets_rolelists import AllAny, Classic, Ranked1_doom
 from utils.roles import Doomsayer
 from utils.classes import parallel_generate_roles
+from utils import build_list
 
 import random
 
-# Simulate the odds of Doomsayer winning N1 by randomly guessing in AllAny
+# Simulate the odds of Doomsayer winning N1 by randomly guessing in a specified role list
 
 
 def check(rolelist):
@@ -20,14 +21,17 @@ def main():
     print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in role_lists]))
 
     while True:
-        rolelist_str = input('Type in a rolelist to simulate.: ')
+        rolelist_str = input('Type in a rolelist to simulate (or "custom" for custom): ')
+
+        if rolelist_str.lower().strip() == 'custom':
+            rolelist = build_list()
+            break
 
         rolelist = [rl for rl in role_lists if rl.name.lower() == rolelist_str.lower().strip("' \"")]
 
         if rolelist:
+            rolelist = rolelist[0]
             break
-
-    rolelist = rolelist[0]
 
     print(f'You selected: {rolelist.name}\n')
 
