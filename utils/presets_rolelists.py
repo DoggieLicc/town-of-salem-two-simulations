@@ -2,7 +2,7 @@ from utils import roles as Roles
 from utils import role_buckets as RoleBuckets
 from utils import RoleList
 
-__all__ = ['AllAny', 'Classic', 'Ranked1', 'Ranked1_doom']
+__all__ = ['AllAny', 'Classic', 'Ranked_Practice', 'Ranked_Practice_Doom']
 
 AllAny = RoleList(
     name='All Any',
@@ -48,44 +48,46 @@ Classic = RoleList(
 )
 
 
-Ranked1 = RoleList(
-    name='Ranked 1',
+Ranked_Practice = RoleList(
+    name='Ranked Practice',
     roles=[
-        Roles.Jailor,
-        RoleBuckets.TownInvestigative,
-        RoleBuckets.TownInvestigative,
-        RoleBuckets.TownProtective,
+        RoleBuckets.TownPower,
         RoleBuckets.TownKilling,
-        RoleBuckets.TownSupport,
+        RoleBuckets.TownProtective,
+        RoleBuckets.TownInvestigative,
+        RoleBuckets.TownInvestigative,
         RoleBuckets.RandomTown,
         RoleBuckets.RandomTown,
         RoleBuckets.RandomTown,
-        Roles.CovenLeader,
+        RoleBuckets.RandomTown,
+        RoleBuckets.CovenPower,
         RoleBuckets.CovenUtility,
         RoleBuckets.RandomCoven,
         RoleBuckets.RandomCoven,
-        RoleBuckets.NeutralKilling,
-        RoleBuckets.NeutralEvil
-    ]
+        RoleBuckets.NeutralEvil,
+        RoleBuckets.RandomNeutral
+    ],
+    banned_roles={Roles.Pirate}
 )
 
-Ranked1_doom = RoleList(
-    name='Ranked 1 doom',
+Ranked_Practice_Doom = RoleList(
+    name='Ranked Practice Doom',
     roles=[
-        Roles.Jailor,
-        RoleBuckets.TownInvestigative,
-        RoleBuckets.TownInvestigative,
-        RoleBuckets.TownProtective,
+        RoleBuckets.TownPower,
         RoleBuckets.TownKilling,
-        RoleBuckets.TownSupport,
+        RoleBuckets.TownProtective,
+        RoleBuckets.TownInvestigative,
+        RoleBuckets.TownInvestigative,
         RoleBuckets.RandomTown,
         RoleBuckets.RandomTown,
         RoleBuckets.RandomTown,
-        Roles.CovenLeader,
+        RoleBuckets.RandomTown,
+        RoleBuckets.CovenPower,
         RoleBuckets.CovenUtility,
         RoleBuckets.RandomCoven,
         RoleBuckets.RandomCoven,
-        RoleBuckets.NeutralKilling,
-        Roles.Doomsayer
-    ]
+        Roles.Doomsayer,
+        RoleBuckets.RandomNeutral
+    ],
+    banned_roles={Roles.Pirate}
 )
