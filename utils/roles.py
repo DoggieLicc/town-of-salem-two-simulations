@@ -8,6 +8,7 @@ Prosecutor = Role(name='Prosecutor', limit=1)
 Monarch = Role(name='Monarch', limit=1)
 Mayor = Role(name='Mayor', limit=1)
 Jailor = Role(name='Jailor', limit=1)
+Marshal = Role(name='Marshal', limit=1)
 
 # RANDOM TOWN
 Admirer = Role(name='Admirer')
@@ -30,6 +31,7 @@ Trapper = Role(name='Trapper')
 Trickster = Role(name='Trickster')
 Veteran = Role(name='Veteran')
 Vigilante = Role(name='Vigilante')
+Socialite = Role(name='Socialite')
 
 # RANDOM COVEN
 Conjurer = Role(name='Conjurer', limit=1)

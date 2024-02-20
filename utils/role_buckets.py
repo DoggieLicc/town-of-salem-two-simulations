@@ -6,7 +6,7 @@ __all__ = ['Any', 'TownPower', 'TownKilling', 'TownProtective', 'TownSupport', '
 
 TownPower = RoleBucket(
     name='Town Power',
-    possible_roles=[Roles.Jailor, Roles.Mayor, Roles.Monarch, Roles.Prosecutor]
+    possible_roles=[Roles.Jailor, Roles.Mayor, Roles.Monarch, Roles.Prosecutor, Roles.Marshal]
 )
 
 TownKilling = RoleBucket(
@@ -21,7 +21,7 @@ TownProtective = RoleBucket(
 
 TownSupport = RoleBucket(
     name='Town Support',
-    possible_roles=[Roles.Admirer, Roles.Amnesiac, Roles.Retributionist, Roles.TavernKeeper]
+    possible_roles=[Roles.Admirer, Roles.Amnesiac, Roles.Retributionist, Roles.TavernKeeper, Roles.Socialite]
 )
 
 TownInvestigative = RoleBucket(
