@@ -2,7 +2,7 @@ from utils import roles as Roles
 from utils import role_buckets as RoleBuckets
 from utils import RoleList
 
-__all__ = ['AllAny', 'Classic', 'Ranked_Practice', 'Ranked_Practice_Doom']
+__all__ = ['AllAny', 'Classic', 'Ranked']
 
 AllAny = RoleList(
     name='All Any',
@@ -48,8 +48,8 @@ Classic = RoleList(
 )
 
 
-Ranked_Practice = RoleList(
-    name='Ranked Practice',
+Ranked = RoleList(
+    name='Ranked',
     roles=[
         RoleBuckets.TownPower,
         RoleBuckets.TownKilling,
@@ -60,34 +60,35 @@ Ranked_Practice = RoleList(
         RoleBuckets.RandomTown,
         RoleBuckets.RandomTown,
         RoleBuckets.RandomTown,
-        RoleBuckets.CovenPower,
-        RoleBuckets.CovenUtility,
+        RoleBuckets.CovenKilling,
+        RoleBuckets.RandomCoven,
         RoleBuckets.RandomCoven,
         RoleBuckets.RandomCoven,
         RoleBuckets.NeutralEvil,
-        RoleBuckets.RandomNeutral
+        RoleBuckets.NeutralKilling
     ],
     banned_roles={Roles.Pirate}
 )
 
-Ranked_Practice_Doom = RoleList(
-    name='Ranked Practice Doom',
+
+Town_Traitor = RoleList(
+    name='Town Traitor',
     roles=[
+        Roles.Crusader,
+        RoleBuckets.TownPower,
         RoleBuckets.TownPower,
         RoleBuckets.TownKilling,
         RoleBuckets.TownProtective,
         RoleBuckets.TownInvestigative,
         RoleBuckets.TownInvestigative,
-        RoleBuckets.RandomTown,
+        RoleBuckets.TownSupport,
         RoleBuckets.RandomTown,
         RoleBuckets.RandomTown,
         RoleBuckets.RandomTown,
         RoleBuckets.CovenPower,
-        RoleBuckets.CovenUtility,
+        RoleBuckets.CovenKilling,
         RoleBuckets.RandomCoven,
-        RoleBuckets.RandomCoven,
-        Roles.Doomsayer,
-        RoleBuckets.RandomNeutral
+        RoleBuckets.RandomCoven
     ],
-    banned_roles={Roles.Pirate}
+    banned_roles={Roles.Admirer, Roles.Trickster, Roles.Dreamweaver}
 )
