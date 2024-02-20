@@ -10,13 +10,13 @@ import random
 __all__ = ['Role', 'RoleBucket', 'RoleList', 'parallel_generate_roles']
 
 
-@dataclass(frozen=True, eq=True)
+@dataclass(frozen=True, eq=True, slots=True)
 class Role:
     name: str
     limit: Optional[int] = None
 
 
-@dataclass
+@dataclass(slots=True)
 class RoleBucket:
     name: str
     possible_roles: List[Union[Role, RoleBucket]]
@@ -40,7 +40,7 @@ class RoleBucket:
         return self.cached_roles
 
 
-@dataclass
+@dataclass(slots=True)
 class RoleList:
     name: str
     roles: List[Union[Role, RoleBucket]]
