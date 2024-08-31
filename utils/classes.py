@@ -148,7 +148,8 @@ def main():
 
     now = time.time()
 
-    parallel_generate_roles(AllAny, num_gens=100000, check=check_list_for_opposing_factions)
+    for _ in range(10_000):
+        AllAny.generate_roles(check=check_list_for_opposing_factions)
 
     print(f'Took {time.time() - now} seconds')
 
@@ -156,6 +157,6 @@ def main():
 if __name__ == '__main__':
     from utils.presets_rolelists import AllAny
 
-    multiprocessing.set_start_method('spawn')
+    #multiprocessing.set_start_method('spawn')
     main()
 
