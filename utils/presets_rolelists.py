@@ -2,93 +2,77 @@ from utils import roles as Roles
 from utils import role_buckets as RoleBuckets
 from utils import RoleList
 
-__all__ = ['AllAny', 'Classic', 'Ranked']
-
-AllAny = RoleList(
-    name='All Any',
+Ranked_12p = RoleList(
+    name='Ranked_12p',
     roles=[
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any,
-        RoleBuckets.Any
+        RoleBuckets.TownPower,
+        RoleBuckets.TownInvestigative,
+        RoleBuckets.TownProtective,
+        RoleBuckets.TownKilling,
+        RoleBuckets.CommonTown,
+        RoleBuckets.CommonTown,
+        RoleBuckets.CommonTown,
+        RoleBuckets.CommonTown,
+        RoleBuckets.CovenPower,
+        RoleBuckets.CovenKilling,
+        RoleBuckets.CommonCoven,
+        RoleBuckets.CommonCoven
     ]
 )
 
-Classic = RoleList(
-    name='Classic',
-    roles=[
-        Roles.Mayor,
-        Roles.Seer,
-        Roles.Cleric,
-        Roles.Sheriff,
-        Roles.TavernKeeper,
-        Roles.Investigator,
-        Roles.CovenLeader,
-        Roles.Poisoner,
-        Roles.Enchanter,
-        Roles.SerialKiller,
-        Roles.Executioner,
-        Roles.Jester,
-        RoleBuckets.TownKilling,
-        RoleBuckets.RandomTown,
-        RoleBuckets.RandomTown
-    ],
-    banned_roles={Roles.Amnesiac, Roles.Spy, Roles.Trickster}
-)
-
-
-Ranked = RoleList(
-    name='Ranked',
+Ranked_15p = RoleList(
+    name='Ranked_15p',
     roles=[
         RoleBuckets.TownPower,
-        RoleBuckets.TownKilling,
+        RoleBuckets.TownInvestigative,
+        RoleBuckets.TownInvestigative,
         RoleBuckets.TownProtective,
-        RoleBuckets.TownInvestigative,
-        RoleBuckets.TownInvestigative,
-        RoleBuckets.RandomTown,
-        RoleBuckets.RandomTown,
-        RoleBuckets.RandomTown,
-        RoleBuckets.RandomTown,
-        RoleBuckets.CovenKilling,
-        RoleBuckets.RandomCoven,
-        RoleBuckets.RandomCoven,
-        RoleBuckets.RandomCoven,
-        RoleBuckets.NeutralEvil,
-        RoleBuckets.NeutralKilling
-    ],
-    banned_roles={Roles.Pirate}
-)
-
-
-Town_Traitor = RoleList(
-    name='Town Traitor',
-    roles=[
-        Roles.Crusader,
-        RoleBuckets.TownPower,
-        RoleBuckets.TownPower,
         RoleBuckets.TownKilling,
-        RoleBuckets.TownProtective,
-        RoleBuckets.TownInvestigative,
-        RoleBuckets.TownInvestigative,
-        RoleBuckets.TownSupport,
-        RoleBuckets.RandomTown,
-        RoleBuckets.RandomTown,
-        RoleBuckets.RandomTown,
+        RoleBuckets.CommonTown,
+        RoleBuckets.CommonTown,
+        RoleBuckets.CommonTown,
+        RoleBuckets.CommonTown,
+        RoleBuckets.CommonTown,
         RoleBuckets.CovenPower,
         RoleBuckets.CovenKilling,
+        RoleBuckets.CommonCoven,
+        RoleBuckets.CommonCoven,
+        RoleBuckets.NeutralPariah
+    ]
+)
+
+Classic_7p = RoleList(
+    name='Classic_7p',
+    roles=[
+        RoleBuckets.TownInvestigative,
+        RoleBuckets.TownProtective,
+        RoleBuckets.CommonTown,
+        RoleBuckets.CommonTown,
+        RoleBuckets.CommonTown,
         RoleBuckets.RandomCoven,
-        RoleBuckets.RandomCoven
+        RoleBuckets.CommonCoven
     ],
-    banned_roles={Roles.Admirer, Roles.Trickster, Roles.Dreamweaver}
+    banned_roles={
+        Roles.Bodyguard,
+        Roles.Barber,
+        Roles.Trapper,
+        Roles.Deputy,
+        Roles.Veteran
+    }
+)
+
+Testing_3p = RoleList(
+    name='testing',
+    roles=[
+        Roles.Oracle,
+        Roles.CovenLeader,
+        RoleBuckets.NeutralPariah,
+    ],
+    banned_roles={
+        Roles.Bodyguard,
+        Roles.Barber,
+        Roles.Trapper,
+        Roles.Deputy,
+        Roles.Veteran
+    }
 )

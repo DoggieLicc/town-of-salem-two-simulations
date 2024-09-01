@@ -70,6 +70,12 @@ class RoleList:
             if not check or check(generated_roles):
                 return generated_roles
 
+@dataclass(slots=True)
+class Player:
+    name: str
+    assigned_role: Optional[Role] = None
+    blessed_scrolls: Optional[List[Role|RoleBucket]] = field(default_factory=list)
+    cursed_scrolls: Optional[List[Role]] = field(default_factory=list)
 
 import utils.role_buckets as RoleBuckets
 
@@ -144,19 +150,8 @@ def b_print(text: str, *args, **kwargs):
 
 
 def main():
-    import time
-
-    now = time.time()
-
-    for _ in range(10_000):
-        AllAny.generate_roles(check=check_list_for_opposing_factions)
-
-    print(f'Took {time.time() - now} seconds')
+    ...
 
 
 if __name__ == '__main__':
-    from utils.presets_rolelists import AllAny
-
-    #multiprocessing.set_start_method('spawn')
-    main()
-
+    ...

@@ -1,6 +1,6 @@
 from utils.classes import Role
 
-__all__ = ['Prosecutor', 'Monarch', 'Mayor', 'Jailor', 'Admirer', 'Amnesiac', 'Bodyguard', 'Cleric', 'Coroner', 'Crusader', 'Investigator', 'Lookout', 'Psychic', 'Retributionist', 'Seer', 'Sheriff', 'Spy', 'TavernKeeper', 'Tracker', 'Trapper', 'Trickster', 'Veteran', 'Vigilante', 'Conjurer', 'CovenLeader', 'Dreamweaver', 'Enchanter', 'HexMaster', 'Illusionist', 'Jinx', 'Medusa', 'Necromancer', 'Poisoner', 'PotionMaster', 'Ritualist', 'VoodooMaster', 'Wilding', 'Witch', 'Baker', 'Berserker', 'Plaguebearer', 'SoulCollector', 'Arsonist', 'SerialKiller', 'Shroud', 'Werewolf', 'Doomsayer', 'Executioner', 'Jester', 'Pirate', 'Deputy']
+# __all__ = ['Prosecutor', 'Monarch', 'Mayor', 'Jailor', 'Admirer', 'Amnesiac', 'Bodyguard', 'Cleric', 'Coroner', 'Crusader', 'Investigator', 'Lookout', 'Psychic', 'Retributionist', 'Seer', 'Sheriff', 'Spy', 'TavernKeeper', 'Tracker', 'Trapper', 'Trickster', 'Veteran', 'Vigilante', 'Conjurer', 'CovenLeader', 'Dreamweaver', 'Enchanter', 'HexMaster', 'Illusionist', 'Jinx', 'Medusa', 'Necromancer', 'Poisoner', 'PotionMaster', 'Ritualist', 'VoodooMaster', 'Wilding', 'Witch', 'Baker', 'Berserker', 'Plaguebearer', 'SoulCollector', 'Arsonist', 'SerialKiller', 'Shroud', 'Werewolf', 'Doomsayer', 'Executioner', 'Jester', 'Pirate', 'Deputy']
 
 
 # TOWN POWER
@@ -12,7 +12,7 @@ Marshal = Role(name='Marshal', limit=1)
 
 # RANDOM TOWN
 Admirer = Role(name='Admirer')
-Amnesiac = Role(name='Amnesiac')
+# Amnesiac = Role(name='Amnesiac')
 Bodyguard = Role(name='Bodyguard')
 Cleric = Role(name='Cleric')
 Coroner = Role(name='Coroner')
@@ -31,7 +31,11 @@ Trapper = Role(name='Trapper')
 Trickster = Role(name='Trickster')
 Veteran = Role(name='Veteran')
 Vigilante = Role(name='Vigilante')
-Socialite = Role(name='Socialite')
+Coachmaster = Role(name='Coachmaster')
+Oracle = Role(name='Oracle')
+Barber = Role(name='Barber')
+Spiritualist = Role(name='Spiritualist')
+# Socialite = Role(name='Socialite')
 
 # RANDOM COVEN
 Conjurer = Role(name='Conjurer', limit=1)
@@ -49,12 +53,15 @@ Ritualist = Role(name='Ritualist', limit=1)
 VoodooMaster = Role(name='Voodoo Master', limit=1)
 Wilding = Role(name='Wilding', limit=1)
 Witch = Role(name='Witch', limit=1)
+Banshee = Role(name='Banshee', limit=1)
+SuperCoven = Role(name='Super Coven', limit=1)
 
 # NEUTRAL APOCALYPSE
 Baker = Role(name='Baker', limit=1)
 Berserker = Role(name='Berserker', limit=1)
 Plaguebearer = Role(name='Plaguebearer', limit=1)
 SoulCollector = Role(name='Soul Collector', limit=1)
+Warlock = Role(name='Warlock', limit=1)
 
 # NEUTRAL KILLING (unique colors)
 Arsonist = Role(name='Arsonist', limit=6)
@@ -66,4 +73,17 @@ Werewolf = Role(name='Werewolf', limit=6)
 Doomsayer = Role(name='Doomsayer', limit=6)
 Executioner = Role(name='Executioner', limit=6)
 Jester = Role(name='Jester', limit=6)
-Pirate = Role(name='Pirate', limit=1)
+
+Inquisitor = Role(name='Inquisitor', limit=1)
+
+## Neutral Pariah
+Judge = Role(name='Judge', limit=1)
+Auditor = Role(name='Auditor', limit=1)
+Starspawn = Role(name='Starspawn', limit=1)
+Politician = Role(name='Politician', limit=1)
+
+## Neutral Special
+# Pirate = Role(name='Pirate', limit=1)
+Jackal = Role(name='Jackal', limit=1)
+Vampire = Role(name='Vampire', limit=1)
+CursedSoul = Role(name='Cursed Soul', limit=6)
