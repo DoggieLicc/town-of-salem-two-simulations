@@ -1,10 +1,13 @@
-from utils.presets_rolelists import Ranked_15p, Ranked_12p, Classic_7p, Testing_3p
+from utils.presets_rolelists import Ranked_15p, Ranked_12p, Classic_7p, Testing_3p, Taa_2p
 from utils.classes import check_list_for_opposing_factions, Player
 
-from utils import build_list, print_rolelist, RoleBucket, Role
+from utils import build_list, print_rolelist, RoleBucket, Role, RoleList
 from utils import role_buckets
+from utils import simple_input
 
 import random
+
+from utils.simple_input import get_boolean_input
 
 MAX_TRIES = 100
 SCROLLABLE_ROLES = list(role_buckets.Any.expand_possible_roles())
@@ -27,6 +30,7 @@ SCROLLABLE_SUBALIGNMENTS = [
 ]
 
 SCROLLABLE_ITEMS = SCROLLABLE_ROLES + SCROLLABLE_SUBALIGNMENTS
+
 
 def generate_lots(player, roles) -> list[int]:
     lots: list[int] = []
@@ -52,7 +56,6 @@ def generate_lots(player, roles) -> list[int]:
 
     return lots
 
-
 def assign_players_to_roles(players: list[Player], roles: list[Role]):
     random.shuffle(players)
     random.shuffle(roles)
@@ -62,10 +65,7 @@ def assign_players_to_roles(players: list[Player], roles: list[Role]):
     for player in players:
         role_lots = generate_lots(player, roles)
 
-        print(player)
-        print(role_lots)
         chosen_role = random.choices(roles, weights=role_lots)[0]
-        print(chosen_role)
         player.assigned_role = chosen_role
         roles.remove(chosen_role)
 
@@ -86,15 +86,12 @@ def assign_players_to_roles(players: list[Player], roles: list[Role]):
 
     return assigned_players
 
-
-def main():
-    role_lists = [Ranked_12p, Ranked_15p, Classic_7p, Testing_3p]
-    players = []
-
+def select_rolelist() -> RoleList:
+    role_lists = [Ranked_12p, Ranked_15p, Classic_7p, Testing_3p, Taa_2p]
     print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in role_lists]))
 
     while True:
-        rolelist_str = input('Type in a rolelist to simulate (or enter "Custom" to make your own): ')
+        rolelist_str = simple_input.get_string_input('Type in a rolelist to simulate (or enter "Custom" to make your own): ')
 
         if rolelist_str.lower().strip() == 'custom':
             rolelist = build_list()
@@ -106,100 +103,62 @@ def main():
             rolelist = rolelist[0]
             break
 
-    print(f'You selected: {rolelist.name}\n')
+    print(f'You selected: {rolelist.name}')
 
     print('\n'.join([f'  {r.name}' for r in rolelist.roles]))
+    return rolelist
 
-    while True:
-        add_players = False
-        add_players_str = input('Add players?: ')
+def select_players(max_players: int, add_scrolls: bool) -> list[Player]:
+    players = []
 
-        add_scrolls = False
+    while len(players) < max_players:
+        player_name = simple_input.get_string_input(f'Input player\'s {len(players) + 1} name: ',
+                                                    f'Player #{len(players) + 1}')
+        player_blessed_scrolls: list[Role | RoleBucket] = []
+        player_cursed_scrolls: list[Role] = []
 
-        if not add_players_str or add_players_str.lower() == 'n':
-            break
+        if add_scrolls:
+            while len(player_blessed_scrolls) < 5:
+                player_scroll_str = simple_input.get_string_input(
+                    f'Input player\'s {len(players) + 1} blessed scroll #{len(player_blessed_scrolls) + 1}: ')
 
-        if add_players_str.lower() == 'y':
-            add_players = True
-
-            while True:
-                add_scrolls_str = input('Add scrolls?: ')
-
-                if add_scrolls_str.lower() == 'n':
+                if player_scroll_str.lower() == 'break':
                     break
 
-                if add_players_str.lower() == 'y':
-                    add_scrolls = True
+                valid_role = [r for r in SCROLLABLE_ITEMS if r.name.lower() == player_scroll_str.lower()]
+
+                if valid_role:
+                    if valid_role in player_blessed_scrolls:
+                        continue
+
+                    player_blessed_scrolls.append(valid_role[0])
+
+            while len(player_cursed_scrolls) < 5:
+                player_scroll_str = simple_input.get_string_input(
+                    f'Input player\'s {len(players) + 1} cursed scroll #{len(player_cursed_scrolls) + 1}: ')
+
+                if player_scroll_str.lower() == 'break':
                     break
 
-            break
+                valid_role = [r for r in SCROLLABLE_ROLES if r.name.lower() == player_scroll_str.lower()]
 
-    if add_players:
-        while len(players) < len(rolelist.roles):
-            player_name = input(f'Input player\'s {len(players)+1} name: ') or f'Player #{len(players)+1}'
-            player_blessed_scrolls: list[Role|RoleBucket] = []
-            player_cursed_scrolls: list[Role] = []
-
-            if add_scrolls:
-                while len(player_blessed_scrolls) < 5:
-                    player_scroll_str = input(f'Input player\'s {len(players)+1} blessed scroll #{len(player_blessed_scrolls)+1}: ')
-
-                    if not player_scroll_str:
+                if valid_role:
+                    if valid_role in player_cursed_scrolls:
                         continue
 
-                    if player_scroll_str.lower() == 'break':
-                        break
+                    player_cursed_scrolls.append(valid_role[0])
 
-                    valid_role = [r for r in SCROLLABLE_ITEMS if r.name.lower() == player_scroll_str.lower()]
+        new_player = Player(
+            name=player_name,
+            blessed_scrolls=player_blessed_scrolls,
+            cursed_scrolls=player_cursed_scrolls
+        )
 
-                    if valid_role:
-                        if valid_role in player_blessed_scrolls:
-                            continue
+        players.append(new_player)
 
-                        player_blessed_scrolls.append(valid_role[0])
+    return players
 
-                while len(player_cursed_scrolls) < 5:
-                    player_scroll_str = input(f'Input player\'s {len(players)+1} cursed scroll #{len(player_cursed_scrolls)+1}: ')
-
-                    if not player_scroll_str:
-                        continue
-
-                    if player_scroll_str.lower() == 'break':
-                        break
-
-                    valid_role = [r for r in SCROLLABLE_ROLES if r.name.lower() == player_scroll_str.lower()]
-
-                    if valid_role:
-                        if valid_role in player_cursed_scrolls:
-                            continue
-
-                        player_cursed_scrolls.append(valid_role[0])
-
-            new_player = Player(
-                name=player_name,
-                blessed_scrolls=player_blessed_scrolls,
-                cursed_scrolls=player_cursed_scrolls
-            )
-            players.append(new_player)
-
-            # print(new_player)
-
-
-    while True:
-        check_opposing_facs_check_str = input('Check generated lists for opposing factions? (y/N): ')
-
-        if not check_opposing_facs_check_str:
-            check_opposing_facs = False
-            break
-
-        if check_opposing_facs_check_str.lower() == 'y':
-            check_opposing_facs = True
-            break
-
-        if check_opposing_facs_check_str.lower() == 'n':
-            check_opposing_facs = False
-            break
-
+def generate_list(rolelist: RoleList, check_opposing_facs : bool) -> list[Role]:
     if check_opposing_facs:
         print('Checking list for opposing factions!\n')
 
@@ -207,12 +166,26 @@ def main():
         generated_roles = rolelist.generate_roles()
 
         if not check_opposing_facs:
-            break
+            return generated_roles
 
         if check_list_for_opposing_factions(generated_roles):
-            break
+            return generated_roles
+
     else:
         raise Exception('Unable to generate valid list!')
+
+def main():
+    players = []
+    rolelist = select_rolelist()
+    check_opposing_facs = get_boolean_input('Check generated lists for opposing factions? (y/N): ', False)
+
+    add_players = get_boolean_input('Add players?: ')
+
+    if add_players:
+        add_scrolls = get_boolean_input('Add scrolls?: ')
+        players = select_players(len(rolelist.roles), add_scrolls)
+
+    generated_roles = generate_list(rolelist, check_opposing_facs)
 
     print('\nGenerated Roles:')
     print_rolelist(generated_roles)

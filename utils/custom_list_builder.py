@@ -52,8 +52,8 @@ def build_list() -> RoleList:
             continue
 
         if inp == 'next':
-            if len(roles) < 5:
-                print("Mininum of 5 roles required")
+            if len(roles) < 2:
+                print("Mininum of 2 roles required")
                 continue
 
             while True:
@@ -101,8 +101,8 @@ def build_list() -> RoleList:
                         print('Can\'t ban role already in list!')
                         continue
 
-                    if len(banned_roles) == 3:
-                        print('Already at max of 3 roles!')
+                    if len(banned_roles) == 99:
+                        print('Already at max of 99 roles!')
                         continue
 
                     banned_roles.append(banned_role)

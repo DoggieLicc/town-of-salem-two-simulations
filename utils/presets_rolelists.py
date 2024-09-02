@@ -76,3 +76,11 @@ Testing_3p = RoleList(
         Roles.Veteran
     }
 )
+
+Taa_2p = RoleList(
+    name='taa_2p',
+    roles=[
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+    ]
+)
