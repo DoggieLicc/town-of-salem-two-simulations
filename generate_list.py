@@ -10,7 +10,7 @@ import random
 from utils.simple_input import get_boolean_input
 
 MAX_TRIES = 100
-SCROLLABLE_ROLES = list(role_buckets.Any.expand_possible_roles())
+SCROLLABLE_ROLES = list(role_buckets.TrueAny.expand_possible_roles())
 SCROLLABLE_SUBALIGNMENTS = [
     role_buckets.RandomTown,
     role_buckets.TownPower,

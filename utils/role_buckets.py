@@ -84,14 +84,15 @@ CovenSpecial = RoleBucket(
     possible_roles=[Roles.SuperCoven]
 )
 
-SoulCollectorOrWarlock = RoleBucket(
-    name='Soul Collector/Warlock',
-    possible_roles=[Roles.SoulCollector, Roles.Warlock]
+DeathAcolyte = RoleBucket(
+    name='Death Acolyte',
+    possible_roles=[Roles.SoulCollector, Roles.Warlock],
+    limit=1
 )
 
 NeutralApocalypse = RoleBucket(
     name='Neutral Apocalypse',
-    possible_roles=[Roles.Baker, Roles.Berserker, Roles.Plaguebearer, SoulCollectorOrWarlock],
+    possible_roles=[Roles.Baker, Roles.Berserker, Roles.Plaguebearer, DeathAcolyte],
 )
 
 NeutralEvil = RoleBucket(
