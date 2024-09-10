@@ -31,6 +31,9 @@ SCROLLABLE_SUBALIGNMENTS = [
 
 SCROLLABLE_ITEMS = SCROLLABLE_ROLES + SCROLLABLE_SUBALIGNMENTS
 
+BASE_ROLE_LOTS = 10
+BLESSED_SCROLL_ROLE_LOTS = 190
+BLESSED_SCROLL_ALIGNMENT_LOTS = 90
 
 def generate_lots(player, roles) -> list[int]:
     lots: list[int] = []
@@ -43,10 +46,10 @@ def generate_lots(player, roles) -> list[int]:
         for blessed_scroll in blessed_scrolls:
             if isinstance(blessed_scroll, RoleBucket):
                 if role in blessed_scroll.expand_possible_roles():
-                    lots_num += 90
+                    lots_num += BLESSED_SCROLL_ALIGNMENT_LOTS
             else:
                 if blessed_scroll == role:
-                    lots_num += 190
+                    lots_num += BLESSED_SCROLL_ROLE_LOTS
 
         for cursed_scroll in cursed_scrolls:
             if cursed_scroll == role:
@@ -70,17 +73,6 @@ def assign_players_to_roles(players: list[Player], roles: list[Role]):
         roles.remove(chosen_role)
 
         assigned_players.append(player)
-
-#    assigned_players: dict[str, Role] = {}
-#    all_player_lots = {p.name: generate_lots(p, roles) for p in players}
-
-#    for role in roles:
-#        player_names = [p.name for p in players]
-#        weights = [lots[1][role] for lots in all_player_lots.items() if lots[0] in player_names]
-#        chosen_player = random.choices(players, weights=weights)[0]
-#
-#        players.remove(chosen_player)
-#        assigned_players[chosen_player.name] = role
 
     random.shuffle(assigned_players)
 
@@ -185,17 +177,23 @@ def main():
         add_scrolls = get_boolean_input('Add scrolls?: ')
         players = select_players(len(rolelist.roles), add_scrolls)
 
-    generated_roles = generate_list(rolelist, check_opposing_facs)
+    while True:
+        generated_roles = generate_list(rolelist, check_opposing_facs)
 
-    print('\nGenerated Roles:')
-    print_rolelist(generated_roles)
+        print('\nGenerated Roles:')
+        print_rolelist(generated_roles)
 
-    if add_players:
-        assigned_players = assign_players_to_roles(players, generated_roles)
+        if add_players:
+            assigned_players = assign_players_to_roles(players, generated_roles)
 
-        print('\nAssigned roles:')
-        for i, player in enumerate(assigned_players):
-            print(f'[{i+1}] - {player.name} ({player.assigned_role.name})')
+            print('\nAssigned roles:')
+            for i, player in enumerate(assigned_players):
+                print(f'[{i+1}] - {player.name} ({player.assigned_role.name})')
+
+        rerack = get_boolean_input('Rerack with same list and players?: ')
+
+        if not rerack:
+            break
 
 
 if __name__ == '__main__':

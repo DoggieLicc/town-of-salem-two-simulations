@@ -7,7 +7,7 @@ from functools import partial
 
 import random
 
-__all__ = ['Role', 'RoleBucket', 'RoleList', 'parallel_generate_roles']
+__all__ = ['Role', 'RoleBucket', 'RoleList', 'parallel_generate_roles', 'check_list_for_opposing_factions']
 
 
 @dataclass(frozen=True, eq=True, slots=True)
@@ -147,11 +147,3 @@ def b_print(text: str, *args, **kwargs):
     text = '\033[1m' + text + '\033[0m'
 
     print(text, *args, **kwargs)
-
-
-def main():
-    ...
-
-
-if __name__ == '__main__':
-    ...
