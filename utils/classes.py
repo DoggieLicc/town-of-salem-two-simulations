@@ -71,6 +71,14 @@ class RoleList:
                 return generated_roles
 
 
+@dataclass(slots=True)
+class Player:
+    name: str
+    assigned_role: Optional[Role] = None
+    blessed_scrolls: Optional[List[Role|RoleBucket]] = field(default_factory=list)
+    cursed_scrolls: Optional[List[Role]] = field(default_factory=list)
+
+
 import utils.role_buckets as RoleBuckets
 
 

@@ -5,6 +5,7 @@ from utils.classes import check_list_for_opposing_factions, parallel_generate_ro
 from utils import build_list
 
 import utils.role_buckets as RoleBuckets
+from utils import simple_input
 
 from collections import Counter
 
@@ -31,37 +32,12 @@ def main():
 
     print('\n'.join([f'  {r.name}' for r in rolelist.roles]))
 
-    while True:
-        check_opposing_facs_check_str = input('\nCheck generated lists for opposing factions? (y/N): ')
-
-        if not check_opposing_facs_check_str:
-            check_opposing_facs = False
-            break
-
-        if check_opposing_facs_check_str.lower() == 'y':
-            check_opposing_facs = True
-            break
-
-        if check_opposing_facs_check_str.lower() == 'n':
-            check_opposing_facs = False
-            break
+    check_opposing_facs = simple_input.get_boolean_input('\nCheck generated lists for opposing factions? (y/N): ', False)
 
     if check_opposing_facs:
         print('Checking lists for opposing factions!')
 
-    while True:
-        num_gens_str = input('Type in the amount of lists to generate (default:10000): ')
-        num_gens = None
-
-        if not num_gens_str:
-            num_gens = 10000
-
-        else:
-            if num_gens_str.isnumeric():
-                num_gens = int(num_gens_str)
-
-        if num_gens:
-            break
+    num_gens = simple_input.get_integer_input('Type in the amount of lists to generate (default:10000): ', 10000)
 
     print(f'Amount of rolelists to generate: {num_gens}')
 

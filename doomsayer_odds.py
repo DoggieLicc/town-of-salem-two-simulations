@@ -4,7 +4,7 @@ import utils.role_buckets
 from utils.presets_rolelists import AllAny, Classic, Ranked
 from utils.roles import Doomsayer
 from utils.classes import parallel_generate_roles
-from utils import build_list
+from utils import build_list, simple_input
 
 import random
 
@@ -37,19 +37,7 @@ def main():
 
     print('\n'.join([f'  {r.name}' for r in rolelist.roles]))
 
-    while True:
-        num_gens_str = input('Type in the amount of lists with doomsayer to generate (default:1000): ')
-        num_gens = None
-
-        if not num_gens_str:
-            num_gens = 1000
-
-        else:
-            if num_gens_str.isnumeric():
-                num_gens = int(num_gens_str)
-
-        if num_gens:
-            break
+    num_gens = simple_input.get_integer_input('Type in the amount of lists to generate (default:10000): ', 10000)
 
     success_count = 0
 
