@@ -1,7 +1,7 @@
 import multiprocessing
 
 import utils.role_buckets
-from utils.presets_rolelists import AllAny, Classic, Ranked_Practice_Doom
+from utils.presets_rolelists import AllAny, Classic, Ranked
 from utils.roles import Doomsayer
 from utils.classes import parallel_generate_roles
 from utils import build_list
@@ -16,7 +16,7 @@ def check(rolelist):
 
 
 def main():
-    role_lists = [AllAny, Classic, Ranked_Practice_Doom]
+    role_lists = [AllAny, Classic, Ranked]
 
     print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in role_lists]))
 

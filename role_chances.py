@@ -1,6 +1,6 @@
 import multiprocessing
 
-from utils.presets_rolelists import AllAny, Classic, Ranked_Practice
+from utils.presets_rolelists import AllAny, Classic, Ranked
 from utils.classes import check_list_for_opposing_factions, parallel_generate_roles, calculate_percentage, b_print
 from utils import build_list
 
@@ -10,7 +10,7 @@ from collections import Counter
 
 
 def main():
-    role_lists = [AllAny, Classic, Ranked_Practice]
+    role_lists = [AllAny, Classic, Ranked]
 
     print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in role_lists]))
 

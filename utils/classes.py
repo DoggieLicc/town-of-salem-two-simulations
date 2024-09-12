@@ -7,7 +7,7 @@ from functools import partial
 
 import random
 
-__all__ = ['Role', 'RoleBucket', 'RoleList', 'parallel_generate_roles']
+__all__ = ['Role', 'RoleBucket', 'RoleList', 'parallel_generate_roles', 'Player', 'check_list_for_opposing_factions']
 
 
 @dataclass(frozen=True, eq=True, slots=True)

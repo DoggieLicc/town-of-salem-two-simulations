@@ -1,4 +1,4 @@
-from utils.presets_rolelists import AllAny, Classic, Ranked_Practice
+from utils.presets_rolelists import AllAny, Ranked, Town_Traitor, Classic
 from utils.classes import check_list_for_opposing_factions
 
 from utils import build_list, print_rolelist
@@ -9,6 +9,9 @@ MAX_TRIES = 100
 def main():
     role_lists = [AllAny, Classic, Ranked_Practice]
 
+
+def select_rolelist() -> RoleList:
+    role_lists = [Ranked, Town_Traitor, Classic, AllAny]
     print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in role_lists]))
 
     while True:
