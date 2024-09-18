@@ -222,6 +222,9 @@ def main():
         coven_town_traitors = get_integer_input('How many coven TTs?: ')
         apoc_town_traitors = get_integer_input('How many apocalypse TTs?: ')
 
+        if rolelist.compliance_mode:
+            compliance_town_traitors = get_integer_input('How many compliance TTs?: ')
+
         players = select_players(len(rolelist.roles), add_scrolls)
 
     while True:
@@ -240,6 +243,10 @@ def main():
 
             for _ in range(apoc_town_traitors):
                 assigned_players = assign_traitor(assigned_players, 'Apoc TT')
+
+            if rolelist.compliance_mode:
+                for _ in range(compliance_town_traitors):
+                    assigned_players = assign_traitor(assigned_players, 'Compliance TT')
 
             if has_jackal:
                 print('Setting Recruits... ')
