@@ -116,8 +116,8 @@ def build_list() -> RoleList:
         added_role = [r for r in (available_roles + available_role_buckets) if inp == r.name.lower()]
 
         if added_role:
-            if len(roles) == 15:
-                print('Already at max of 15 roles!')
+            if len(roles) == 99:
+                print('Already at max of 99 roles!')
                 continue
 
             roles.append(added_role[0])
