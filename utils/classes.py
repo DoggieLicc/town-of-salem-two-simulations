@@ -75,6 +75,7 @@ class RoleList:
 class Player:
     name: str
     assigned_role: Optional[Role] = None
+    special_alignment: Optional[str] = None
     blessed_scrolls: Optional[List[Role|RoleBucket]] = field(default_factory=list)
     cursed_scrolls: Optional[List[Role]] = field(default_factory=list)
 

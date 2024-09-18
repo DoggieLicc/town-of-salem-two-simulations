@@ -4,10 +4,11 @@ from utils.classes import check_list_for_opposing_factions, Player
 from utils import build_list, print_rolelist, RoleBucket, Role, RoleList
 from utils import role_buckets
 from utils import simple_input
+from utils import roles
 
 import random
 
-from utils.simple_input import get_boolean_input
+from utils.simple_input import get_boolean_input, get_integer_input
 
 MAX_TRIES = 100
 SCROLLABLE_ROLES = list(role_buckets.TrueAny.expand_possible_roles())
@@ -79,6 +80,45 @@ def assign_players_to_roles(players: list[Player], roles: list[Role]):
     random.shuffle(assigned_players)
 
     return assigned_players
+
+
+def assign_traitor(players: list[Player], faction: str):
+    town_players = [p for p in players if p.assigned_role in role_buckets.TOWN_ROLES and not p.special_alignment]
+
+    if not town_players:
+        raise Exception(f'Couldn\'t assign {faction} to a valid townie')
+
+    random_town_player: Player = random.choice(town_players)
+    players.remove(random_town_player)
+    random_town_player.special_alignment = faction
+    players.append(random_town_player)
+    random.shuffle(players)
+
+    return players
+
+
+def assign_recruits(players: list[Player]):
+    non_special_players = [p for p in players if not p.special_alignment and not p.assigned_role == roles.Jackal]
+    try_limit = 0
+
+    while True:
+        random_players: list[Player] = random.choices(non_special_players, k=2)
+        random_players_roles = [rp.assigned_role for rp in random_players]
+
+        if check_list_for_opposing_factions(random_players_roles):
+            for player in random_players:
+                players.remove(player)
+                player.special_alignment = 'Recruit'
+                players.append(player)
+
+            random.shuffle(players)
+            return players
+
+        try_limit += 1
+
+        if try_limit == MAX_TRIES:
+            raise Exception('Unable to assign recruits to valid players')
+
 
 def select_rolelist() -> RoleList:
     role_lists = [Ranked_12p, Ranked_15p, Classic_7p, Testing_3p, Taa_2p, Taa_15p]
@@ -180,10 +220,15 @@ def main():
 
     if add_players:
         add_scrolls = get_boolean_input('Add scrolls?: ')
+        coven_town_traitors = get_integer_input('How many coven TTs?: ')
+        apoc_town_traitors = get_integer_input('How many apocalypse TTs?: ')
+
         players = select_players(len(rolelist.roles), add_scrolls)
 
     while True:
         generated_roles = generate_list(rolelist, check_opposing_facs)
+
+        has_jackal = roles.Jackal in generated_roles
 
         print('\nGenerated Roles:')
         print_rolelist(generated_roles)
@@ -191,14 +236,32 @@ def main():
         if add_players:
             assigned_players = assign_players_to_roles(players, generated_roles)
 
+            for _ in range(coven_town_traitors):
+                assigned_players = assign_traitor(assigned_players, 'Coven TT')
+
+            for _ in range(apoc_town_traitors):
+                assigned_players = assign_traitor(assigned_players, 'Apoc TT')
+
+            if has_jackal:
+                print('Setting Recruits... ')
+                assigned_players = assign_recruits(assigned_players)
+
             print('\nAssigned roles:')
             for i, player in enumerate(assigned_players):
-                print(f'[{i+1}] - {player.name} ({player.assigned_role.name})')
+                special_faction_text = f' [{player.special_alignment}]' if player.special_alignment else ''
+                print(f'[{i+1}] - {player.name} ({player.assigned_role.name}){special_faction_text}')
 
         rerack = get_boolean_input('Rerack with same list and players?: ')
 
         if not rerack:
             break
+
+        if add_players:
+            for player in players:
+                player.assigned_role = None
+                player.special_alignment = None
+
+            # assigned_players = [Player(name=p.name) for p in assigned_players]
 
 
 if __name__ == '__main__':
