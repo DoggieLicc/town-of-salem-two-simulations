@@ -1,4 +1,4 @@
-from utils.presets_rolelists import Ranked_15p, Ranked_12p, Classic_7p, Testing_3p, Taa_2p
+from utils.presets_rolelists import Ranked_15p, Ranked_12p, Classic_7p, Testing_3p, Taa_2p, Taa_15p
 from utils.classes import check_list_for_opposing_factions, Player
 
 from utils import build_list, print_rolelist, RoleBucket, Role, RoleList

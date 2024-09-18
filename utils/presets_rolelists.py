@@ -85,3 +85,24 @@ Taa_2p = RoleList(
     ]
 )
 
+Taa_15p = RoleList(
+    name='taa_15p',
+    roles=[
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+    ]
+)
+
