@@ -90,10 +90,12 @@ def check_role_limit(generated_roles: List[Role], role: Role) -> bool:
 
 
 def check_rolebucket_limit(generated_roles: List[Role], role: Role) -> bool:
-    if role in RoleBuckets.COVEN_ROLES:
-        num_roles = sum(1 for r in generated_roles if r in RoleBuckets.COVEN_ROLES)
+    for bucket in RoleBuckets.ROLE_BUCKETS:
+        if bucket.limit and role in bucket.expand_possible_roles():
+            bucket_roles = sum(1 for r in generated_roles if r in bucket.expand_possible_roles())
 
-        return num_roles + 1 <= RoleBuckets.RandomCoven.limit
+            if bucket_roles + 1 > bucket.limit:
+                return False
 
     return True
 
