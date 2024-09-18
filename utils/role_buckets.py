@@ -84,7 +84,7 @@ CovenSpecial = RoleBucket(
     possible_roles=[Roles.SuperCoven]
 )
 
-DeathAcolye = RoleBucket(
+DeathAcolyte = RoleBucket(
     name='Soul Collector/Warlock',
     possible_roles=[Roles.SoulCollector, Roles.Warlock],
     limit=1
@@ -92,7 +92,7 @@ DeathAcolye = RoleBucket(
 
 NeutralApocalypse = RoleBucket(
     name='Neutral Apocalypse',
-    possible_roles=[Roles.Baker, Roles.Berserker, Roles.Plaguebearer, DeathAcolye],
+    possible_roles=[Roles.Baker, Roles.Berserker, Roles.Plaguebearer, DeathAcolyte],
 )
 
 NeutralEvil = RoleBucket(
@@ -140,10 +140,10 @@ TrueAny = RoleBucket(
     possible_roles=[Any, TownSpecial, NeutralSpecial]
 )
 
-COVEN_ROLES = RandomCoven.expand_possible_roles()
+COVEN_ROLES = RandomCoven.expand_possible_roles().union(CovenSpecial.expand_possible_roles())
 
 APOCALYPSE_ROLES = NeutralApocalypse.expand_possible_roles()
 
-TOWN_ROLES = RandomTown.expand_possible_roles()
+TOWN_ROLES = RandomTown.expand_possible_roles().union(TownSpecial.expand_possible_roles())
 
 ROLE_BUCKETS = [h for v, h in globals().items() if isinstance(h, RoleBucket)]
