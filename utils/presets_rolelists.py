@@ -124,7 +124,9 @@ Jackal_Taa_15p = RoleList(
         RoleBuckets.TrueAny,
         RoleBuckets.TrueAny,
         RoleBuckets.TrueAny,
-    ]
+    ],
+    pandora_mode=True,
+    compliance_mode=True
 )
 
 ALL_ROLELISTS = [h for v, h in globals().items() if isinstance(h, RoleList)]

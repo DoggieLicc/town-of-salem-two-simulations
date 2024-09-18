@@ -1,4 +1,4 @@
-from utils import role_buckets
+from utils import role_buckets, simple_input
 from utils.classes import RoleList
 
 __all__ = ['build_list', 'print_rolelist']
@@ -59,7 +59,7 @@ def build_list() -> RoleList:
             while True:
                 print_rolelist(banned_roles)
 
-                inp2 = input('Input a role to ban, or "list", "delete", "back", "finish": ')
+                inp2 = input('Input a role to ban, or "list", "delete", "back", "next": ')
 
                 inp2 = inp2.lower().strip()
 
@@ -85,10 +85,16 @@ def build_list() -> RoleList:
                     del banned_roles[int(del_inp) - 1]
                     continue
 
-                if inp2 == 'finish':
+                if inp2 == 'next':
+
+                    pandora_mode = simple_input.get_boolean_input('Enable Pandora?: ')
+                    compliance_mode = simple_input.get_boolean_input('Enable Compliance?: ')
+
                     return RoleList(
                         name='Custom',
                         roles=roles,
+                        pandora_mode=pandora_mode,
+                        compliance_mode=compliance_mode,
                         banned_roles=set(banned_roles)
                     )
 

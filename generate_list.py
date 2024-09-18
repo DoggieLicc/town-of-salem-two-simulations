@@ -97,7 +97,7 @@ def assign_traitor(players: list[Player], faction: str):
     return players
 
 
-def assign_recruits(players: list[Player]):
+def assign_recruits(players: list[Player], pandora, compliance):
     non_special_players = [p for p in players if not p.special_alignment and not p.assigned_role == roles.Jackal]
     try_limit = 0
 
@@ -105,7 +105,7 @@ def assign_recruits(players: list[Player]):
         random_players: list[Player] = random.choices(non_special_players, k=2)
         random_players_roles = [rp.assigned_role for rp in random_players]
 
-        if check_list_for_opposing_factions(random_players_roles):
+        if check_list_for_opposing_factions(random_players_roles, pandora, compliance):
             for player in random_players:
                 players.remove(player)
                 player.special_alignment = 'Recruit'
@@ -203,7 +203,7 @@ def generate_list(rolelist: RoleList, check_opposing_facs : bool) -> list[Role]:
         if not check_opposing_facs:
             return generated_roles
 
-        if check_list_for_opposing_factions(generated_roles):
+        if check_list_for_opposing_factions(generated_roles, pandora=rolelist.pandora_mode, compliance=rolelist.compliance_mode):
             return generated_roles
 
     else:
@@ -243,11 +243,15 @@ def main():
 
             if has_jackal:
                 print('Setting Recruits... ')
-                assigned_players = assign_recruits(assigned_players)
+                assigned_players = assign_recruits(assigned_players, rolelist.pandora_mode, rolelist.compliance_mode)
 
             print('\nAssigned roles:')
             for i, player in enumerate(assigned_players):
                 special_faction_text = f' [{player.special_alignment}]' if player.special_alignment else ''
+                if rolelist.pandora_mode:
+                    special_faction_text = special_faction_text.replace('Coven', 'Pandora')
+                    special_faction_text = special_faction_text.replace('Apoc', 'Pandora')
+
                 print(f'[{i+1}] - {player.name} ({player.assigned_role.name}){special_faction_text}')
 
         rerack = get_boolean_input('Rerack with same list and players?: ')

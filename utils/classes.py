@@ -44,6 +44,8 @@ class RoleBucket:
 class RoleList:
     name: str
     roles: List[Union[Role, RoleBucket]]
+    pandora_mode: bool = False
+    compliance_mode: bool = False
     banned_roles: Set[Role] = field(default_factory=set)
     sorted_roles: List[Union[Role, RoleBucket]] = field(init=False)
 
@@ -107,7 +109,7 @@ def get_valid_roles(generated_roles: List[Role], possible_roles: Set[Role], bann
     return valid_roles
 
 
-def check_list_for_opposing_factions(role_list: List[Role]) -> bool:
+def check_list_for_opposing_factions(role_list: List[Role], pandora: bool = False, compliance: bool = False) -> bool:
     role_set = set(role_list)
     townies = role_set.intersection(RoleBuckets.TOWN_ROLES)
     coven = role_set.intersection(RoleBuckets.COVEN_ROLES)
@@ -117,13 +119,13 @@ def check_list_for_opposing_factions(role_list: List[Role]) -> bool:
 
     apocalypse = role_set.intersection(RoleBuckets.APOCALYPSE_ROLES)
 
-    if (townies and apocalypse) or (coven and apocalypse):
+    if (townies and apocalypse) or ((coven and apocalypse) and not pandora):
         return True
 
     unique_neutral_killings = role_set.intersection(RoleBuckets.NeutralKilling.expand_possible_roles())
 
     if unique_neutral_killings:
-        return bool(townies or coven or apocalypse or (len(unique_neutral_killings) > 1))
+        return bool(townies or coven or apocalypse or ((len(unique_neutral_killings) > 1) and not compliance))
 
     # print(role_list)
 
