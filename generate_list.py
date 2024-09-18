@@ -35,6 +35,7 @@ BASE_ROLE_LOTS = 10
 BLESSED_SCROLL_ROLE_LOTS = 190
 BLESSED_SCROLL_ALIGNMENT_LOTS = 90
 
+
 def generate_lots(player, roles) -> list[int]:
     lots: list[int] = []
     blessed_scrolls = player.blessed_scrolls
@@ -58,6 +59,7 @@ def generate_lots(player, roles) -> list[int]:
         lots.append(lots_num)
 
     return lots
+
 
 def assign_players_to_roles(players: list[Player], roles: list[Role]):
     random.shuffle(players)
@@ -99,6 +101,7 @@ def select_rolelist() -> RoleList:
 
     print('\n'.join([f'  {r.name}' for r in rolelist.roles]))
     return rolelist
+
 
 def select_players(max_players: int, add_scrolls: bool) -> list[Player]:
     players = []
@@ -150,6 +153,7 @@ def select_players(max_players: int, add_scrolls: bool) -> list[Player]:
 
     return players
 
+
 def generate_list(rolelist: RoleList, check_opposing_facs : bool) -> list[Role]:
     if check_opposing_facs:
         print('Checking list for opposing factions!\n')
@@ -165,6 +169,7 @@ def generate_list(rolelist: RoleList, check_opposing_facs : bool) -> list[Role]:
 
     else:
         raise Exception('Unable to generate valid list!')
+
 
 def main():
     players = []

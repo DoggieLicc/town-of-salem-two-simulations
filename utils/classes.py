@@ -70,6 +70,7 @@ class RoleList:
             if not check or check(generated_roles):
                 return generated_roles
 
+
 @dataclass(slots=True)
 class Player:
     name: str
