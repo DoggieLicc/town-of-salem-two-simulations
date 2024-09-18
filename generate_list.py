@@ -79,7 +79,7 @@ def assign_players_to_roles(players: list[Player], roles: list[Role]):
     return assigned_players
 
 def select_rolelist() -> RoleList:
-    role_lists = [Ranked_12p, Ranked_15p, Classic_7p, Testing_3p, Taa_2p]
+    role_lists = [Ranked_12p, Ranked_15p, Classic_7p, Testing_3p, Taa_2p, Taa_15p]
     print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in role_lists]))
 
     while True:

@@ -34,7 +34,7 @@ Vigilante = Role(name='Vigilante')
 Coachmaster = Role(name='Coachmaster')
 Oracle = Role(name='Oracle')
 Barber = Role(name='Barber')
-Spiritualist = Role(name='Spiritualist')
+Spiritualist = Role(name='Spiritualist', limit=1)
 # Socialite = Role(name='Socialite')
 
 # RANDOM COVEN
