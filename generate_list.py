@@ -1,4 +1,4 @@
-from utils.presets_rolelists import Ranked_15p, Ranked_12p, Classic_7p, Testing_3p, Taa_2p, Taa_15p
+from utils.presets_rolelists import ALL_ROLELISTS
 from utils.classes import check_list_for_opposing_factions, Player
 
 from utils import build_list, print_rolelist, RoleBucket, Role, RoleList
@@ -121,8 +121,7 @@ def assign_recruits(players: list[Player]):
 
 
 def select_rolelist() -> RoleList:
-    role_lists = [Ranked_12p, Ranked_15p, Classic_7p, Testing_3p, Taa_2p, Taa_15p]
-    print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in role_lists]))
+    print('Available rolelists: ' + ', '.join([f"'{rl.name}'" for rl in ALL_ROLELISTS]))
 
     while True:
         rolelist_str = simple_input.get_string_input('Type in a rolelist to simulate (or enter "Custom" to make your own): ')
@@ -131,7 +130,7 @@ def select_rolelist() -> RoleList:
             rolelist = build_list()
             break
 
-        rolelist = [rl for rl in role_lists if rl.name.lower() == rolelist_str.lower().strip("' \"")]
+        rolelist = [rl for rl in ALL_ROLELISTS if rl.name.lower() == rolelist_str.lower().strip("' \"")]
 
         if rolelist:
             rolelist = rolelist[0]

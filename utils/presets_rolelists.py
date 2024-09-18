@@ -106,3 +106,26 @@ Taa_15p = RoleList(
     ]
 )
 
+Jackal_Taa_15p = RoleList(
+    name='jackal_taa_15p',
+    roles=[
+        Roles.Jackal,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+        RoleBuckets.TrueAny,
+    ]
+)
+
+ALL_ROLELISTS = [h for v, h in globals().items() if isinstance(h, RoleList)]
+
