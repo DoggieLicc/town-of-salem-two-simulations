@@ -32,6 +32,7 @@ Trickster = Role(name='Trickster')
 Veteran = Role(name='Veteran')
 Vigilante = Role(name='Vigilante')
 Socialite = Role(name='Socialite')
+Oracle = Role(name='Oracle')
 
 # RANDOM COVEN
 Conjurer = Role(name='Conjurer', limit=1)

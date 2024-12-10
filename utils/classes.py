@@ -97,6 +97,12 @@ def check_rolebucket_limit(generated_roles: List[Role], role: Role) -> bool:
 
         return num_roles + 1 <= RoleBuckets.RandomCoven.limit
 
+    
+    if role in RoleBuckets.APOCALYPSE_ROLES:
+        num_roles = sum(1 for r in generated_roles if r in RoleBuckets.APOCALYPSE_ROLES)
+        return num_roles + 1 <= RoleBuckets.NeutralApocalypse.limit
+
+
     return True
 
 
